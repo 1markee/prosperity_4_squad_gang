@@ -28,7 +28,7 @@ class ConversionObservation:
         self.exportTariff = exportTariff
         self.importTariff = importTariff
     #    self.sugarPrice = sugarPrice
-    #   self.sunlightIndex = sunlightIndex
+    #    self.sunlightIndex = sunlightIndex
         
 
 class Observation:
