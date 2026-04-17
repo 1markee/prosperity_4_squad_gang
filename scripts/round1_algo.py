@@ -80,7 +80,12 @@ class Trader:
 
         best_bid = max(order_depth.buy_orders.keys())
         best_ask = min(order_depth.sell_orders.keys())
-        fair = (best_bid + best_ask) / 2
+        # Micro-price: volume-weighted fair value. Heavy bid volume pulls fair
+        # toward the ask (the next trade is more likely to happen on the side
+        # with LESS volume), which is a better fair-value estimate than raw mid.
+        bid_vol = order_depth.buy_orders[best_bid]
+        ask_vol = -order_depth.sell_orders[best_ask]
+        fair = (best_ask * bid_vol + best_bid * ask_vol) / (bid_vol + ask_vol)
 
         # Remaining capacity on each side
         buy_cap  = POSITION_LIMIT - position   # how many more units we can buy
